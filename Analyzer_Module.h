@@ -17,14 +17,14 @@ int list_length(Node* list);
 
 void gen_report(FILE* report, Node* booking, Node* accepted, Node* rejected, int invalid_requests) {
     int booking_num = list_length(booking);
-    int request_num = booking_num + invalid_requests;
+    int valid_booking_num = booking_num - invalid_requests;
     int battery, cable, locker, umbrella, valet, inflation, max_battery, max_cable, max_locker, max_umbrella, max_valet, max_inflation;
     count_resources(accepted, &battery, &cable, &locker, &umbrella, &valet, &inflation);
     count_max_resources(&max_battery, &max_cable, &max_locker, &max_umbrella, &max_valet, &max_inflation);
 
-    fprintf(report, " \t\tTotal Number of Bookings Received: %d (%.1f%%)\n", booking_num, (float)booking_num/request_num*100);
-    fprintf(report, " \t\t\t  Number of Bookings Assigned: %d (%.1f%%)\n", list_length(accepted),(float)list_length(accepted)/booking_num*100);
-    fprintf(report, " \t\t\t  Number of Bookings Rejected: %d (%.1f%%)\n",list_length(rejected) ,(float)list_length(rejected)/booking_num*100);
+    fprintf(report, " \t\tTotal Number of Bookings Received: %d (%.1f%%)\n", valid_booking_num, (float)valid_booking_num/booking_num*100);
+    fprintf(report, " \t\t\t  Number of Bookings Assigned: %d (%.1f%%)\n", list_length(accepted),(float)list_length(accepted)/valid_booking_num*100);
+    fprintf(report, " \t\t\t  Number of Bookings Rejected: %d (%.1f%%)\n",list_length(rejected) ,(float)list_length(rejected)/valid_booking_num*100);
     fprintf(report, " \t\tUtilization of Time Slot:\n");
     fprintf(report, " \t\t\t Battery   - %.1f%%\n", (float)battery/max_battery*100);
     fprintf(report, " \t\t\t Cable     - %.1f%%\n", (float)cable/max_cable*100);
